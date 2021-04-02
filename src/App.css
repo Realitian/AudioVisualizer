@@ -1,0 +1,27 @@
+body {
+  margin: 0px;
+}
+
+#visualizerCanvas {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+#next {
+  width: fit-content;
+  margin: 0px;
+  position: absolute;
+  top: 5%;
+  left: 1%;
+}
+#prev {
+  width: fit-content;
+  margin: 0px;
+  position: absolute;
+  top: 5%;
+  left: 95%;
+}
