@@ -7,27 +7,40 @@ let uniforms,
   animateTimeout,
   resizeTimeout,
   analyser,
-  audioData;
+  audioData,
+  lastMaterial;
 class App extends Component {
   state = {
     lastVisual: null,
     scene: null
+    // ,
+    // material: null
   };
   componentDidMount = () => {
+    // console.log("didmount");
     this.startVisual(analyser);
+    
   };
   componentDidUpdate = async () => {
-    if (this.props.shader !== this.state.lastVisual) {
-      if (scene) {
-        await this.clearThree();
-        uniforms = null;
-        scene = null;
+    console.log("didupdate");
+    // console.trace();
+    // if (this.props.shader !== this.state.lastVisual) {
+    //   if (scene) {
+    //     await this.clearThree();
+    //     uniforms = null;
+    //     scene = null;
 
-        clearTimeout(animateTimeout);
-        clearTimeout(resizeTimeout);
-      }
-      this.startVisual();
-    }
+    //     clearTimeout(animateTimeout);
+    //     clearTimeout(resizeTimeout);
+    //   }
+    //   this.startVisual();
+    // }
+    
+    console.log("scene", this.props.shader);
+    scene.children[0].material.setValues({
+      fragmentShader: this.props.shader,
+      uniforms
+    });
   };
   clearThree = () => {
     renderer.clear();
@@ -140,12 +153,12 @@ class App extends Component {
         }
       };
 
-      const material = new THREE.ShaderMaterial({
+      lastMaterial = new THREE.ShaderMaterial({
         fragmentShader: shader,
         uniforms
       });
 
-      scene.add(new THREE.Mesh(plane, material));
+      scene.add(new THREE.Mesh(plane, lastMaterial));
     }
 
     navigator.getUserMedia =

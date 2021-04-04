@@ -39,7 +39,7 @@ class Mic extends Component {
     })
       .then((r) => r.json())
       .then((data) => {
-        this.setState({ shader: data.shader });
+        this.setState({ visualNumber: n, shader: data.shader });
       });
   };
   componentDidUpdate = () => {
@@ -55,7 +55,7 @@ class Mic extends Component {
       parseFloat(this.state.visualNumber) + parseFloat(e.target.value);
     console.log(value);
     if (value > 0 && value < 17) {
-      this.setState({ visualNumber: value });
+      // this.setState({ visualNumber: value });
       this.getVisual(value);
     }
   };
