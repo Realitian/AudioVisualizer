@@ -53,7 +53,7 @@ class Mic extends Component {
   changeVisual = (e) => {
     let value =
       parseFloat(this.state.visualNumber) + parseFloat(e.target.value);
-    console.log(value);
+    // console.log(value);
     if (value > 0 && value < 17) {
       // this.setState({ visualNumber: value });
       this.getVisual(value);

@@ -41,6 +41,7 @@ class App extends Component {
       fragmentShader: this.props.shader,
       uniforms
     });
+    scene.children[0].material.needsUpdate = true;
   };
   clearThree = () => {
     renderer.clear();
