@@ -1,0 +1,8 @@
+{
+  "phenotype_classification": "Supernova",
+  "mood": {
+    "valance": 0.7,
+    "energy": 0.9
+  },
+  "shader":"\n      uniform vec3 iResolution;\n      uniform float iTime;\n      uniform sampler2D iChannel0;\n\n      void mainImage( out vec4 fragColor, in vec2 fragCoord )\n{\n\tvec2 uv = (fragCoord.xy - iResolution.xy/2.0) / iResolution.yy;\n    vec2 sp = fragCoord.xy / iResolution.xy;\n\n    float beat = texture(iChannel0, vec2(0.1,0.25)).x;\n    float time = iTime;\n    \n    vec2 rd = vec2(atan(uv.x,uv.y), length(uv));\n    \n    rd = vec2(rd.x+time*0.0, rd.y*(1.4-beat));\n    \n\n    float ljud = texture(iChannel0, vec2(rd.y*0.75, 0.25)).x;\n  \n    vec2 xygrid = 1.0-clamp(abs(sin(vec2(sin(rd.x),cos(rd.x))*rd.y*3.14159*10.0))*4.0, 0.0,1.0);\n    vec2 rdgrid = 1.0-clamp(abs(sin(rd*vec2(0.5,1.0)*16.0))*16.0*min(1.0,rd.y), 0.0,1.0);\n    \n\tfragColor.xyz = vec3(1.0-step(ljud, abs(cos(rd.x)*rd.y)))*ljud*ljud*8.0;\n    \n\n\n\tfragColor.x += rdgrid.x+rdgrid.y;\n    fragColor.y += xygrid.x+xygrid.y;\n    \n    \n    vec2 srd = vec2(ivec2(sin(rd.x*(1.0+float(int(mod(iTime*3.0,4.0)))))*3.14159*1.0+iTime*4.0));\n    fragColor.xyz += vec3(sin(srd.x),cos(srd.x),-sin(srd.x));\n    fragColor.a = 0.0;\n}\n\n      void main() {\n        mainImage(gl_FragColor, gl_FragCoord.xy);\n      }"
+}
