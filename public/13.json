@@ -1,8 +1,0 @@
-{
-  "phenotype_classification": "Drawing",
-  "mood": {
-    "valance": 0.5,
-    "energy": 0.2
-  },
-  "shader":"\n      uniform vec3 iResolution;\n      uniform float iTime;\n      uniform sampler2D iChannel0;\n      uniform sampler2D iChannel1;\n\n      void mainImage( out vec4 fragColor, in vec2 fragCoord )\n{\n\tvec2 uv = fragCoord.xy / iResolution.xy;\n    uv -= vec2(0.5);\n    uv.x *= iResolution.x / iResolution.y;\n    \n    // Read the microphone\n    float react = texture(iChannel0, vec2(0.1, 0.0)).x;\n    \n    // Draw a circle\n    float a = atan(uv.y, uv.x);\n    float r = length(uv);\n    float ir= 1.0 - r;\n    \n    ir += 0.1 * sin(a * 5.0 + r * 50.0 * react + iTime);\n    float c = smoothstep(0.8, 0.85, ir);\n    \n    c += (1.0 - smoothstep(0.01, 0.03, abs(uv.x + 0.1 * sin(uv.y * 9.0)))) * (1.0 - smoothstep(0.01, 0.03, uv.y));\n    \n    // Draw a background\n    vec3 col = mix(vec3(0.8, 0.8, 0.2), vec3(0.8, 0.2, 0.2), uv.y);\n    col = mix(col, vec3(0.0), c);\n    \n    // Draw a tunnel\n    //col = r * texture(iChannel1, vec2( 1.0 / r, a)).xyz;\n    \n    fragColor = vec4(col, 1.0);\n}\n\n      void main() {\n        mainImage(gl_FragColor, gl_FragCoord.xy);\n      }"
-}
